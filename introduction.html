@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ACLCC Website</title>
+    <title>ACLCC介绍</title>
     <link rel="icon" href="icon.png" type="image/x-icon">
     <style>
       @import url("webfonts/orbitron_black/stylesheet.css");
@@ -595,16 +595,16 @@ a:active {
             
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <scan class="nav-link">主页</scan>
+                    <a href="index.html" class="nav-link">主页</a>
                 </li>
                 <li class="nav-item">
-                    <a href="introduction.html"  ><scan class="nav-link">介绍</scan></a>
+                    <scan class="nav-link">介绍</scan>
                 </li>
                 <li class="nav-item">
-                    <a href="download.html" class="nav-link" >下载</a>
+                    <a href="download.html" class="nav-link" data-page="download">下载</a>
                 </li>
                 <li class="nav-item">
-                    <a href="member.html" class="nav-link" >成员</a>
+                    <a href="member.html" class="nav-link" data-page="authors">成员</a>
                 </li>
             </ul>
         </div>
@@ -612,16 +612,21 @@ a:active {
 
     <!-- 页面内容区域 -->
 <div class="page-content">
-        <!-- 主页 -->
-        
-                <h1 class="main-title" style="font-family:'拾陆字濑户2 0'">Adofai Cursed Levels Chinese Community</h1>
-            <div class="home-content">
-                <p class="home-description">广告位招租</p>
-            </div>
-
-        
-        <!-- 下载页面 -->
        
+        <!-- 介绍页面 -->
+        <section id="about" class="page-section">
+            <h1 class="main-title" style="font-family:'拾陆字濑户2 0'">Adofai Cursed Levels Chinese Community</h1>
+            <p class="subtitle">广告位招租</p>
+            
+            <div class="home-content">
+                <p class="home-description" style="font-family:HappyZcool">
+                    Test
+                </p>
+                <p class="home-description" style="margin-top: 30px;">
+                    广告位招租
+                </p>
+            </div>
+        </section>  
   <table width="100%" border="0">
           <tbody>
             <tr>
@@ -739,8 +744,6 @@ a:active {
             }
         }
         
-        // 导航链接点击事件
-       
         
         // 随机提示功能
         const tips = [
