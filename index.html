@@ -1,20 +1,882 @@
-<!-- ...existing code... -->
-<style>
-@font-face {
-  font-family: 'HappyZcool';
-  src: url('thefonts/HappyZcool.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACLCC Website</title>
+    <link rel="icon" href="icon.png" type="image/x-icon">
+    <style>
+        @import url("webfonts/orbitron_black/stylesheet.css");
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: #050a33;
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* 星空背景 */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 5s infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+        
+        /* 顶部导航栏 */
+        .top-nav {
+            background: rgba(5, 10, 51, 0.9);
+            padding: 15px 0;
+            border-bottom: 2px solid rgba(0, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .nav-logo {
+            font-size: 1.8rem;
+            text-decoration: none;
+            background: linear-gradient(135deg, #00ffff, #00ffaa, #00ccff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 900;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-logo:hover {
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+            transform: scale(1.05);
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        .nav-item {
+            position: relative;
+        }
+        
+        .nav-link {
+            color: #a0e6ff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 8px 15px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        /* 悬停高亮效果 */
+        .nav-link:hover {
+            color: #00ffff;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.7);
+            background: rgba(0, 150, 255, 0.15);
+            box-shadow: 0 0 15px rgba(0, 200, 255, 0.3);
+        }
+        
+        /* 当前页面下划线效果 */
+        .nav-link.active {
+            color: #00ffff;
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 15px;
+            right: 15px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ffff, transparent);
+            box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+        }
+        
+        /* 移动端导航菜单按钮 */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        
+        .nav-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #00ffff;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+        
+        /* 页面内容区域 */
+        .page-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: calc(100vh - 200px);
+        }
+        
+        .page-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .page-section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 主标题样式 */
+        .main-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #00ffff, #00ffaa, #00ccff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 900;
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: #a0e6ff;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+        
+        /* 主页内容 */
+        .home-content {
+            text-align: center;
+            padding: 50px 0;
+        }
+        
+        .home-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #00ffff, #00ffaa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .home-description {
+            font-size: 1.2rem;
+            color: #a0e6ff;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        /* 关卡容器 */
+        .levels-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        /* 关卡项样式 */
+        .level-item {
+            margin-bottom: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(10, 20, 70, 0.6);
+            border: 1px solid rgba(0, 200, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 150, 255, 0.2);
+            backdrop-filter: blur(5px);
+        }
+        
+        .level-header {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .level-header:hover {
+            background: rgba(15, 30, 80, 0.7);
+        }
+        
+        .level-title {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #00ffff, #00ffaa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+        
+        .level-toggle {
+            font-size: 1.5rem;
+            color: #00ffff;
+            transition: transform 0.3s ease;
+        }
+        
+        .level-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background: rgba(15, 25, 60, 0.8);
+        }
+        
+        .level-content.active {
+            max-height: 500px;
+        }
+        
+        .level-tracks {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .track-item {
+            background: rgba(20, 35, 90, 0.7);
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid rgba(0, 200, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .track-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 150, 255, 0.4);
+            border-color: rgba(0, 255, 255, 0.5);
+        }
+        
+        .track-name {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #a0e6ff;
+        }
+        
+        .track-author {
+            font-size: 0.9rem;
+            color: #70c0ff;
+            margin-bottom: 15px;
+        }
+        
+        .download-btn {
+            display: block;
+            padding: 10px 15px;
+            background: linear-gradient(135deg, #00aaff, #00ffcc);
+            color: #050a33;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 700;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
+        }
+        
+        .download-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+        }
+        
+        /* 作者页面样式 */
+        .authors-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .author-card {
+            background: rgba(10, 20, 70, 0.6);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(0, 200, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .author-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0, 150, 255, 0.3);
+            border-color: rgba(0, 255, 255, 0.5);
+        }
+        
+        .author-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #00aaff, #00ffcc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: #050a33;
+            font-weight: 900;
+        }
+        
+        .author-name {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #00ffff;
+        }
+        
+        .author-role {
+            font-size: 1rem;
+            color: #70c0ff;
+            margin-bottom: 15px;
+        }
+        
+        .author-description {
+            font-size: 0.9rem;
+            color: #a0e6ff;
+            line-height: 1.5;
+        }
+        
+        /* 网站作者卡片样式 */
+        .website-author-card {
+            background: rgba(10, 20, 70, 0.6);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(0, 200, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 150, 255, 0.2);
+        }
+        
+        .website-author-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .website-author-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00aaff, #00ffcc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #050a33;
+            font-weight: 900;
+            margin-right: 20px;
+        }
+        
+        .website-author-info h3 {
+            font-size: 1.8rem;
+            color: #00ffff;
+            margin-bottom: 5px;
+        }
+        
+        .website-author-info p {
+            color: #70c0ff;
+            font-size: 1.1rem;
+        }
+        
+        .tips-section {
+            background: rgba(15, 25, 60, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 4px solid #00ffff;
+        }
+        
+        .tips-title {
+            font-size: 1.2rem;
+            color: #00ffff;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .tips-title::before {
+            content: "💡";
+            margin-right: 8px;
+        }
+        
+        .tip-content {
+            font-size: 1rem;
+            color: #a0e6ff;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(20, 35, 90, 0.5);
+            border-radius: 8px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .special-thanks {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0, 200, 255, 0.2);
+        }
+        
+        .special-thanks h4 {
+            font-size: 1.1rem;
+            color: #00ffff;
+            margin-bottom: 10px;
+        }
+        
+        .thanks-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .thanks-item {
+            background: rgba(20, 35, 90, 0.7);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #a0e6ff;
+            border: 1px solid rgba(0, 200, 255, 0.2);
+        }
+        
+        /* 页脚样式 */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+            background: rgba(5, 10, 51, 0.8);
+            border-top: 1px solid rgba(0, 200, 255, 0.3);
+            backdrop-filter: blur(5px);
+        }
+        
+        footer p {
+            margin: 10px 0;
+            color: #a0e6ff;
+            font-size: 1rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: rgba(5, 10, 51, 0.95);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+                padding: 20px 0;
+                border-bottom: 2px solid rgba(0, 255, 255, 0.3);
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-toggle {
+                display: flex;
+            }
+            
+            .nav-toggle.active span:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+            
+            .nav-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .nav-toggle.active span:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+            
+            .main-title {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .level-title {
+                font-size: 1.5rem;
+            }
+            
+            .level-tracks {
+                grid-template-columns: 1fr;
+            }
+            
+            .authors-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .website-author-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .website-author-avatar {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+    body,td,th {
+	font-family: Orbitron, sans-serif;
 }
-.header-title {
-  font-family: 'HappyZcool', sans-serif;
-  font-weight: normal; /* 取消粗体 */
+a:link {
+	text-decoration: none;
 }
-</style>
-<header style="background: #ffffff; color: #3fa9ff; padding: 20px 0;">
-  <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: center; padding: 0 20px;">
-    <h1 class="header-title" style="margin: 0; font-size: 2rem; font-weight: normal;">
-      Adofai <span style="color: red;">Cursed Levels </span>Community</h1>
-  </div>
-</header>
-<!-- ...existing code... -->
+a:visited {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: none;
+}
+a:active {
+	text-decoration: none;
+}
+    </style>
+</head>
+
+<body>
+    <!-- 星空背景 -->
+    <div class="stars" id="stars"></div>
+    
+    <!-- 顶部导航栏 -->
+    <nav class="top-nav">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">ACLCC</a>
+            
+            <div class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="home">主页</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="about">介绍</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="download">下载</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" data-page="authors">成员</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 页面内容区域 -->
+<div class="page-content">
+        <!-- 主页 -->
+        <section id="home" class="page-section">
+            <div class="home-content">
+                <h1 class="home-title">Adofai Cursed Levels Chinese Community</h1>
+                <p class="home-description">广告位招租</p>
+            </div>
+        </section>
+        
+        <!-- 介绍页面 -->
+        <section id="about" class="page-section">
+            <h1 class="main-title">关于Adofai Cursed Levels Chinese Community</h1>
+            <p class="subtitle">广告位招租</p>
+            
+            <div class="home-content">
+                <p class="home-description">
+                    广告位招租
+                </p>
+                <p class="home-description" style="margin-top: 30px;">
+                    广告位招租
+                </p>
+            </div>
+        </section>
+        
+        <!-- 下载页面 -->
+        <section id="download" class="page-section">
+            <h1 class="main-title">魔改谱面下载</h1>
+            <p class="subtitle">真的很多</p>
+
+            <div class="levels-container">
+                <!-- 关卡1-X -->
+                <div class="level-item">
+                    <div class="level-header" onclick="toggleLevel(this)">
+                        <h2 class="level-title">1-X</h2>
+                        <span class="level-toggle">+</span>
+                    </div>
+                    <div class="level-content">
+                        <div class="level-tracks">
+                            <div class="track-item">
+                                <div class="track-name">神秘</div>
+                                <div class="track-author">By Grafrustix</div>
+                                <a href="/file/qxj1-x.zip" class="download-btn" target="_blank">下载</a>
+                            </div>
+                            <div class="track-item">
+                                <div class="track-name">神秘</div>
+                                <div class="track-author">By 棍母</div>
+                                <a href="/file/twisted-reality.zip" class="download-btn" target="_blank">下载</a>
+                            </div>
+                            <div class="track-item">
+                                <div class="track-name">神秘</div>
+                                <div class="track-author">By 棍母</div>
+                                <a href="/file/impossible-path.zip" class="download-btn" target="_blank">下载</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 关卡2-X -->
+                <div class="level-item">
+                    <div class="level-header" onclick="toggleLevel(this)">
+                        <h2 class="level-title">2-X</h2>
+                        <span class="level-toggle">+</span>
+                    </div>
+                    <div class="level-content">
+                        <div class="level-tracks">
+                            <div class="track-item">
+                                <div class="track-name">神秘</div>
+                                <div class="track-author">By 棍母</div>
+                                <a href="/file/chaotic-dimensions.zip" class="download-btn" target="_blank">下载</a>
+                            </div>
+                            <div class="track-item">
+                                <div class="track-name">神秘</div>
+                                <div class="track-author">By 棍母</div>
+                                <a href="/file/vortex-madness.zip" class="download-btn" target="_blank">下载</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 关卡3-X -->
+                <div class="level-item">
+                    <div class="level-header" onclick="toggleLevel(this)">
+                        <h2 class="level-title">3-X</h2>
+                        <span class="level-toggle">+</span>
+                    </div>
+                    <div class="level-content">
+                        <div class="level-tracks">
+                            <div class="track-item">
+                                <div class="track-name">神秘</div>
+                                <div class="track-author">By 棍母</div>
+                                <a href="/file/abyssal-descent.zip" class="download-btn" target="_blank">下载</a>
+                            </div>
+                            <div class="track-item">
+                                <div class="track-name">神秘</div>
+                                <div class="track-author">By 棍母</div>
+                                <a href="/file/quantum-leap.zip" class="download-btn" target="_blank">下载</a>
+                            </div>
+                            <div class="track-item">
+                                <div class="track-name">神秘</div>
+                                <div class="track-author">By 棍母</div>
+                                <a href="/file/neon-nightmare.zip" class="download-btn" target="_blank">下载</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 作者页面 -->
+  <section id="authors" class="page-section">
+            <h1 class="main-title">成员信息</h1>
+    <p class="subtitle">广告位招租</p>
+            <!-- 网站作者卡片 -->
+            
+            
+            <!-- 地图作者卡片 -->
+            <div class="authors-container">
+              <a href="https://space.bilibili.com/1749280432" target="_blank"><div class="author-card">
+                    <div class="author-avatar">T</div>
+                    <h3 class="author-name">TheHale</h3>
+                    <p class="author-role">域名持有者</p>
+                    <p class="author-description">尊贵的有钱人</p>
+                </div></a>
+                <a href="https://space.bilibili.com/672178840" target="_blank"><div class="author-card">
+                  <div class="author-avatar">摆</div>
+                    <h3 class="author-name">Baile</h3>
+                    <p class="author-role">网站设计师</p>
+                    <p class="author-description">摆了</p>
+              </div></a>
+                
+                <a href="https://space.bilibili.com/496241761" target="_blank"><div class="author-card">
+                    <div class="author-avatar">M</div>
+                    <h3 class="author-name">ms_win_and_mc</h3>
+                    <p class="author-role">网站美化师</p>
+                    <p class="author-description">复制这一块</p>
+                </div></a>
+    </div>
+  </section>
+  <table width="100%" border="0">
+          <tbody>
+            <tr>
+              <td> <div class="tips-section">
+                    <div class="tips-title">小贴士</div>
+                    <div class="tip-content" id="randomTip">加载中...</div》
+                ></div></td>
+            </tr>
+          </tbody>
+  </table>
+    </div>
+<footer>
+        <p>Developed by ACLCC Website Team</p>
+        <p>2024-2025</p>
+        <p>&copy; Adofai Cursed Levels Chinese Community</p>
+    </footer>
+
+    <script>
+        // 创建星空背景
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 150;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // 随机大小
+                const size = Math.random() * 3;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // 随机位置
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                // 随机闪烁延迟
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+        
+        // 切换关卡展开/收缩
+        function toggleLevel(header) {
+            const content = header.nextElementSibling;
+            const toggle = header.querySelector('.level-toggle');
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                toggle.textContent = '+';
+            } else {
+                // 关闭其他打开的关卡
+                document.querySelectorAll('.level-content.active').forEach(item => {
+                    item.classList.remove('active');
+                    item.previousElementSibling.querySelector('.level-toggle').textContent = '+';
+                });
+                
+                content.classList.add('active');
+                toggle.textContent = '-';
+            }
+        }
+        
+        // 移动端导航菜单切换
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        navToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        });
+        
+        // 页面切换功能
+        function switchPage(pageId) {
+            // 隐藏所有页面
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // 显示目标页面
+            document.getElementById(pageId).classList.add('active');
+            
+            // 更新导航链接状态
+            document.querySelectorAll('.nav-link').forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-page') === pageId) {
+                    item.classList.add('active');
+                }
+            });
+            
+            // 保存当前页面到本地存储
+            localStorage.setItem('currentPage', pageId);
+            
+            // 在移动端点击后关闭菜单
+            if (window.innerWidth <= 768) {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+            }
+        }
+        
+        // 导航链接点击事件
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetPage = this.getAttribute('data-page');
+                switchPage(targetPage);
+            });
+        });
+        
+        // 随机提示功能
+        const tips = [
+            "这是一条Tips",
+            "这不是一条Tips",
+			"以防你不知道ACLCC以前其实叫ACLC（雾）"
+        ];
+        
+        function showRandomTip() {
+            const randomIndex = Math.floor(Math.random() * tips.length);
+            const tipElement = document.getElementById('randomTip');
+            tipElement.textContent = tips[randomIndex];
+        }
+        
+        // 页面加载完成后初始化
+        window.addEventListener('DOMContentLoaded', function() {
+            createStars();
+            showRandomTip();
+            
+            // 从本地存储获取上次访问的页面，如果没有则默认为主页
+            const savedPage = localStorage.getItem('currentPage') || 'home';
+            switchPage(savedPage);
+        });
+    </script>
+</body>
+</html>
