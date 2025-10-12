@@ -7,7 +7,6 @@
     <link rel="icon" href="icon.png" type="image/x-icon">
     <style>
       @import url("webfonts/orbitron_black/stylesheet.css");
-      @import url("webfonts/happyzcool/stylesheet.css");
       @import url("webfonts/拾陆字_户2_0/stylesheet.css");
       @import url("webfonts/MPLUSRounded1c_Bold/stylesheet.css");
         
@@ -100,7 +99,7 @@
         
         /* 当前页面下划线效果 */
         .nav-link.active {
-            color: #00ffff;
+            color: #00ffff00;
         }
         
         .nav-link.active::after {
@@ -114,6 +113,17 @@
             box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
         }
         
+        .nav-link-2 {
+            color: #a0e6ff;
+            text-decoration: none;
+            font-weight: normal;
+            font-family: '拾陆字濑户2 0';
+            font-size: 1.1rem;
+            padding: 8px 15px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
         /* 移动端导航菜单按钮 */
         .nav-toggle {
             display: none;
@@ -153,6 +163,20 @@
         
         /* 主标题样式 */
         .main-title {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #00ffff, #00ffaa, #00ccff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 900;
+            font-family: '拾陆字濑户2 0';
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+            letter-spacing: 2px;
+        }
+        
+        .main-title-2 {
             font-size: 3rem;
             text-align: center;
             margin-bottom: 30px;
@@ -231,16 +255,18 @@
         
         .level-title {
             font-size: 1.8rem;
-            background: linear-gradient(135deg, #00ffff, #00ffaa);
+            background: linear-gradient(135deg, #8de4ff, #00aeff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            font-weight: 700;
+            font-weight: normal;
+            font-family: '拾陆字濑户2 0';
         }
         
         .level-toggle {
-            font-size: 1.5rem;
-            color: #00ffff;
+            font-size: 3.5rem;
+            color: #8de4ff;
+            font-family: '拾陆字濑户2 0';
             transition: transform 0.3s ease;
         }
         
@@ -280,18 +306,20 @@
             font-size: 1.2rem;
             margin-bottom: 10px;
             color: #a0e6ff;
+            font-family: '拾陆字濑户2 0';
         }
         
         .track-author {
             font-size: 0.9rem;
             color: #70c0ff;
             margin-bottom: 15px;
+            font-family: '拾陆字濑户2 0';
         }
         
         .download-btn {
             display: block;
             padding: 10px 15px;
-            background: linear-gradient(135deg, #00aaff, #00ffcc);
+            background: linear-gradient(135deg, #0099ff, #00f7ff);
             color: #050a33;
             text-decoration: none;
             border-radius: 25px;
@@ -578,6 +606,9 @@ a:active {
             
 <ul class="nav-menu" id="navMenu">
                 <li class="nav-item">
+                    <a class="nav-link-2">v1-(git-版本号)</a>
+                </li>
+                <li class="nav-item">
                     <a href="index.html" class="nav-link">主页</a>
                 </li>
                 <li class="nav-item">
@@ -594,13 +625,13 @@ a:active {
        
         <!-- 下载页面 -->
             <h1 class="main-title" style="font-family:'拾陆字濑户2 0'">Adofai Cursed Levels Chinese Community</h1>
-            <h1 class="main-title">魔改谱面下载</h1>
-            <p class="subtitle">真的很多</p>
+            <h1 class="main-title-2">众多魔改谱面下载</h1>
+            <p class="subtitle" style="font-family: '拾陆字濑户2 0'">目前团队还在寻找更多的魔改向作品，请耐心等待.jpg</p>
 
             <div class="levels-container">
                 <div class="level-item">
                     <div class="level-header" onclick="toggleLevel(this)">
-                        <h2 class="level-title">晴小姐魔改 | By <a href="member.html" class="level-title">Grafrustix</a> | <span style="font-family:'拾陆字濑户2 0'">&#8249;世界-X3</span></h2>
+                        <h2 class="level-title" style="font-weight: normal;">晴小姐魔改 | Miss Qing Curse<br>By <a href="member.html" class="level-title" style="font-weight: normal;">Grafrustix</a> | &#8249;世界-X3</h2>
                         <span class="level-toggle">+</span>
                     </div>
                     <div class="level-content">
